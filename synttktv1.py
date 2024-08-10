@@ -1,8 +1,8 @@
 import numpy as np
 import cv2
-import tkinter as tk
-from tkinter import filedialog
+import pyttsx3
 import os
+import moviepy.editor as mpe
 
 # Set up video parameters
 fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # Codec for MP4
@@ -19,6 +19,17 @@ out = cv2.VideoWriter(video_path, fourcc, fps, frame_size)
 # Define the letters and positions
 letters = ["A", "B", "C"]
 letter_positions = [(320, 240), (320, 240), (320, 240)]  # Center positions for the letters
+
+# Initialize the TTS engine
+engine = pyttsx3.init()
+
+# Generate audio files for each letter
+audio_files = []
+for letter in letters:
+    audio_path = f"{letter}.wav"
+    audio_files.append(audio_path)
+    engine.save_to_file(letter, audio_path)
+engine.runAndWait()
 
 # Generate synthetic frames
 for i in range(num_frames):
@@ -50,22 +61,21 @@ for i in range(num_frames):
 # Release the video writer
 out.release()
 
-# Set up tkinter GUI
-def download_video():
-    # Ask user where to save the file
-    save_path = filedialog.asksaveasfilename(defaultextension=".mp4", filetypes=[("MP4 files", "*.mp4")])
-    if save_path:
-        # Copy the video to the chosen location
-        os.rename(video_path, save_path)
-        print("Video saved successfully.")
+# Combine the video and audio using moviepy
+video_clip = mpe.VideoFileClip(video_path)
 
-# Create the main window
-root = tk.Tk()
-root.title("Download MP4 Video")
+# Load and concatenate the audio files
+audio_clips = [mpe.AudioFileClip(audio) for audio in audio_files]
+final_audio = mpe.concatenate_audioclips(audio_clips)
 
-# Create a "Download" button
-download_button = tk.Button(root, text="Download", command=download_video)
-download_button.pack(pady=20)
+# Set the audio to the video clip
+final_clip = video_clip.set_audio(final_audio)
 
-# Start the GUI event loop
-root.mainloop()
+# Write the final output to a file
+final_clip.write_videofile("final_alphabet_video_with_audio.mp4", codec="libx264", fps=fps)
+
+# Clean up the temporary audio files
+for audio in audio_files:
+    os.remove(audio)
+
+print("Video with embedded audio saved successfully.")

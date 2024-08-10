@@ -64,9 +64,18 @@ out.release()
 # Combine the video and audio using moviepy
 video_clip = mpe.VideoFileClip(video_path)
 
-# Load and concatenate the audio files
+# Load and set the audio files to the respective portions of the video
 audio_clips = [mpe.AudioFileClip(audio) for audio in audio_files]
-final_audio = mpe.concatenate_audioclips(audio_clips)
+
+# Define the start time of each letter's audio
+audio_start_times = [i * letter_duration for i in range(len(letters))]
+
+# Add the audio clips to the video at the correct time
+final_audio = mpe.CompositeAudioClip([
+    audio_clips[0].set_start(audio_start_times[0]),
+    audio_clips[1].set_start(audio_start_times[1]),
+    audio_clips[2].set_start(audio_start_times[2])
+])
 
 # Set the audio to the video clip
 final_clip = video_clip.set_audio(final_audio)
@@ -78,4 +87,4 @@ final_clip.write_videofile("final_alphabet_video_with_audio.mp4", codec="libx264
 for audio in audio_files:
     os.remove(audio)
 
-print("Video with embedded audio saved successfully.")
+print("Video with synchronized audio saved successfully.")

@@ -17,7 +17,7 @@ video_path = 'alphabet_video.mp4'
 out = cv2.VideoWriter(video_path, fourcc, fps, frame_size)
 
 # Define the letters and positions
-letters = ["NOTICIA UNO", "NOTICIA DOS", "NOTICIA TRES"]
+letters = ["A", "B", "C"]
 letter_positions = [(320, 240), (320, 240), (320, 240)]  # Center positions for the letters
 
 # Generate synthetic frames

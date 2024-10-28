@@ -88,8 +88,22 @@ def generate_video(news, audio_files):
         (255, 0, 0)    # Blue for the third news item
     ]
 
+    # Create the "ReadyVideos" folder on the desktop if it doesn't exist
+    desktop_path = r"C:\Users\ds1020254\Desktop"
+    ready_videos_path = os.path.join(desktop_path, "ReadyVideos")
+    if not os.path.exists(ready_videos_path):
+        os.makedirs(ready_videos_path)
+
+    # Find a unique filename for the output video
+    video_index = 1
+    video_filename = f"final_news_video_with_audio{video_index}.mp4"
+    video_path = os.path.join(ready_videos_path, video_filename)
+    while os.path.exists(video_path):
+        video_index += 1
+        video_filename = f"final_news_video_with_audio{video_index}.mp4"
+        video_path = os.path.join(ready_videos_path, video_filename)
+
     # Create a VideoWriter object
-    video_path = 'news_video.mp4'
     out = cv2.VideoWriter(video_path, fourcc, fps, frame_size)
 
     # Generate synthetic frames
@@ -160,7 +174,7 @@ def generate_video(news, audio_files):
     final_clip = video_clip.set_audio(final_audio)
 
     # Write the final output to a file
-    final_clip.write_videofile("final_news_video_with_audio.mp4", codec="libx264", fps=fps)
+    final_clip.write_videofile(video_path, codec="libx264", fps=fps)
 
     # Clean up the temporary audio files
     for audio in audio_files:
@@ -226,7 +240,7 @@ def display_news():
 # Set up the main window
 root = tk.Tk()
 root.title("Top News")
-root.geometry("700x800")
+root.geometry("300x400")
 
 # Create a frame to hold the news
 news_frame = tk.Frame(root)

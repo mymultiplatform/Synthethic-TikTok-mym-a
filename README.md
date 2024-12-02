@@ -1,56 +1,67 @@
 # Synthetic TikTok - MYM-Z
 
-Synthetic TikTok (MYM-Z) is an innovative project designed to emulate and analyze the dynamics of TikTok-like platforms. It combines synthetic data generation, user behavior modeling, and platform analytics to explore trends, simulate interactions, and provide valuable insights into social media patterns.
+## Overview
+
+Synthetic TikTok is a Python-based project that automates the generation of TikTok-style videos by fetching the latest news, converting it into text-to-speech, creating a video with synchronized audio and text, and uploading the result to a GitHub repository. This project utilizes tools like Selenium for web scraping, OpenCV for video creation, pyttsx3 for text-to-speech, and MoviePy for video editing.
 
 ## Features
 
-- **Synthetic Data Generation**: Create simulated user profiles, videos, interactions, and trends.
-- **Platform Analytics**: Analyze engagement metrics, content virality, and user retention.
-- **Behavioral Simulation**: Model user actions like likes, comments, and shares to understand platform dynamics.
-- **Customizable Framework**: Easily modify parameters for various scenarios or research needs.
-- **Scalability**: Supports small-scale testing to large-scale simulations.
+- **Fetch News**: Automatically scrapes top news articles from BBC using Selenium and BeautifulSoup.
+- **Text-to-Speech**: Converts fetched news articles into speech using pyttsx3.
+- **Video Creation**: Generates a TikTok-style video with the news, including text and images (if available) displayed on a black background.
+- **Automatic Upload**: Uploads the generated video to a GitHub repository.
+- **Automation**: Continuous video generation every hour, with a configurable 3-minute interval between test runs.
+
+## Requirements
+
+- Python 3.x
+- Selenium
+- pyttsx3
+- OpenCV
+- MoviePy
+- PIL (Pillow)
+- WebDriver Manager
+- Git and PowerShell (for upload functionality)
 
 ## Installation
 
-1. **Clone the Repository**:
+1. Clone the repository:
 
    ```bash
    git clone https://github.com/mymultiplatform/Synthetic-TikTok-mym-z.git
    cd Synthetic-TikTok-mym-z
    ```
 
-2. **Set Up the Environment**:
+2. Set up a virtual environment and install dependencies:
 
    ```bash
    python3 -m venv venv
    source venv/bin/activate   # On Windows: venv\Scripts\activate
-   ```
-
-3. **Install Dependencies**:
-
-   ```bash
    pip install -r requirements.txt
    ```
 
 ## Usage
 
-1. **Configure Settings**:
-
-   - Update the `.env` file with necessary configurations.
-
-2. **Run the Simulation**:
-
+1. **Start Automation**:
+   - Run the `main.py` file to initiate the Tkinter GUI. Press the "Start Automation" button to begin generating and uploading videos.
+   
    ```bash
    python main.py
    ```
 
-3. **View Results**:
+2. **Automation Process**:
+   - The program will scrape the latest news, convert it to speech, create a video, and upload it to GitHub.
+   - By default, it runs two test videos with a 3-minute interval and continues generating a video every hour thereafter.
 
-   - Generated data and analytics will be available in the `output` directory.
+## File Structure
+
+- `brainvid/`: Folder where generated videos are saved.
+- `main.py`: Main script to run the program and start the automation.
+- `requirements.txt`: List of dependencies required to run the project.
 
 ## Contributing
 
-Contributions are welcome! Please fork the repository and submit a pull request.
+Feel free to fork the repository and submit pull requests for improvements or bug fixes.
 
 ## License
 
@@ -58,8 +69,4 @@ This project is licensed under the MIT License.
 
 ## Contact
 
-For questions or suggestions, please open an issue in this repository.
-
----
-
-*Note: This project is for research and educational purposes only.* 
+For questions, suggestions, or issues, please open an issue on the GitHub repository.

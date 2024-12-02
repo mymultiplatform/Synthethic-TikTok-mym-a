@@ -1,0 +1,9 @@
+selenium
+webdriver_manager
+bs4
+numpy
+opencv-python
+pyttsx3
+moviepy
+pillow
+python-dotenv
